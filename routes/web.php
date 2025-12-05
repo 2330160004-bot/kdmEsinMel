@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\DocumentController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -22,6 +23,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('mynotes', [NoteController::class, 'store'])->name('notes.store');
     Route::put('mynotes/{id}', [NoteController::class, 'update'])->name('notes.update');
     Route::delete('mynotes/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
+    // Documents CRUD routes
+    Route::resource('documents', DocumentController::class);
 });
 
 require __DIR__.'/settings.php';

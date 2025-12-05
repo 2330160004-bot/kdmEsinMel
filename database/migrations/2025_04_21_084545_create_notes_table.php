@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id'); // Add user_id column
-            $table->string("title");
-            $table->text("content");
-            $table->timestamps();
+        if (!Schema::hasTable('notes')) {
+            Schema::create('notes', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id'); // Add user_id column
+                $table->string("title");
+                $table->text("content");
+                $table->timestamps();
 
-            // Add foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+                // Add foreign key constraint
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
     }
 
     /**
